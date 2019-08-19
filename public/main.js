@@ -1,5 +1,6 @@
 let missions = []
 let currentIndex = 0
+
 // image api
 const createUrl = nasaSite => {
   const API_URL = `https://sdg-astro-api.herokuapp.com/api/Nasa/apod`
@@ -25,16 +26,20 @@ const getImage = async nasaSite => {
 const getLaunchCard = async spaceXSite => {
   const response = await fetch(createSpaceXUrl(spaceXSite))
   const spaceXData = await response.json()
+
   console.log(spaceXData)
+
   missions = spaceXData
+
   //  populate launch card
   document.querySelector('.launch-card').textContent =
     missions[currentIndex].mission_name
-  document.querySelector('.info').textContent =
+  document.querySelector('.launch-info').textContent =
     missions[currentIndex].details || 'no description available yet.'
   document.querySelector('.location').textContent =
     missions[currentIndex].launch_site.site_name_long
 }
+
 const nextMissionButton = () => {
   if (currentIndex > missions.length - 2) {
     currentIndex = 0
@@ -59,8 +64,8 @@ const main = () => {
 }
 document.addEventListener('DOMContentLoaded', main)
 document
-  .querySelector('.right arrow dark-primary-color primary-text-color')
+  .querySelector('.right-arrow')
   .addEventListener('click', nextMissionButton)
 document
-  .querySelector('.left arrow dark-primary-color primary-text-color')
+  .querySelector('.left-arrow')
   .addEventListener('click', previousMissionButton)
